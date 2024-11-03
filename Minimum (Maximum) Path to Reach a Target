@@ -1,0 +1,115 @@
+Before starting the topic let me introduce myself. I am a Mobile Developer currently working in Warsaw and spending my free time for interview preparations. I started to prepare for interviews two years ago. At that time I should say I could not solve the two sum problem. Easy problems seemed to me like hard ones so most of the time I had to look at editorials and discuss section. Currently, I have solved ~800 problems and time to time participate in contests. I usually solve 3 problems in a contest and sometimes 4 problems. Ok, lets come back to the topic.
+
+
+Recently I have concentrated my attention on Dynamic Programming cause its one of the hardest topics in an interview prep. After solving ~140 problems in DP I have noticed that there are few patterns that can be found in different problems. So I did a research on that and find the following topics. I will not give complete ways how to solve problems but these patterns may be helpful in solving DP.
+
+
+Patterns
+Minimum (Maximum) Path to Reach a Target
+Distinct Ways
+Merging Intervals
+DP on Strings
+Decision Making
+
+
+Minimum (Maximum) Path to Reach a Target
+Problem list: https://leetcode.com/list/55ac4kuc
+
+
+Generate problem statement for this pattern
+
+
+Statement
+Given a target find minimum (maximum) cost / path / sum to reach the target.
+
+
+Approach
+Choose minimum (maximum) path among all possible paths before the current state, then add value for the current state.
+
+
+routes[i] = min(routes[i-1], routes[i-2], ... , routes[i-k]) + cost[i]
+Generate optimal solutions for all values in the target and return the value for the target.
+
+
+Top-Down
+for (int j = 0; j < ways.size(); ++j) {
+    result = min(result, topDown(target - ways[j]) + cost/ path / sum);
+}
+return memo[/*state parameters*/] = result;
+Bottom-Up
+for (int i = 1; i <= target; ++i) {
+   for (int j = 0; j < ways.size(); ++j) {
+       if (ways[j] <= i) {
+           dp[i] = min(dp[i], dp[i - ways[j]] + cost / path / sum) ;
+       }
+   }
+}
+ 
+return dp[target]
+Similar Problems
+746. Min Cost Climbing Stairs Easy
+
+
+Top-Down
+int result = min(minCost(n-1, cost, memo), minCost(n-2, cost, memo)) + (n == cost.size() ? 0 : cost[n]);
+return memo[n] = result;
+Bottom-Up
+for (int i = 2; i <= n; ++i) {
+   dp[i] = min(dp[i-1], dp[i-2]) + (i == n ? 0 : cost[i]);
+}
+ 
+return dp[n]
+64. Minimum Path Sum Medium
+
+
+Top-Down
+int result = min(pathSum(i+1, j, grid, memo), pathSum(i, j+1, grid, memo)) + grid[i][j];
+    
+return memo[i][j] = result;
+Bottom-Up
+for (int i = 1; i < n; ++i) {
+   for (int j = 1; j < m; ++j) {
+       grid[i][j] = min(grid[i-1][j], grid[i][j-1]) + grid[i][j];
+   }
+}
+ 
+return grid[n-1][m-1]
+322. Coin Change Medium
+
+
+Top-Down
+for (int i = 0; i < coins.size(); ++i) {
+    if (coins[i] <= target) { // check validity of a sub-problem
+        result = min(ans, CoinChange(target - coins[i], coins) + 1);
+    }
+}
+return memo[target] = result;
+Bottom-Up
+for (int j = 1; j <= amount; ++j) {
+   for (int i = 0; i < coins.size(); ++i) {
+       if (coins[i] <= j) {
+           dp[j] = min(dp[j], dp[j - coins[i]] + 1);
+       }
+   }
+}
+
+Complete Problem List for This Pattern
+
+Here is the full list of problems associated with the "Minimum (Maximum) Path to Reach a Target" pattern:
+
+1. [Leetcode 746](https://leetcode.com/problems/min-cost-climbing-stairs/) - Min Cost Climbing Stairs  
+2. [Leetcode 64](https://leetcode.com/problems/minimum-path-sum/) - Minimum Path Sum  
+3. [Leetcode 322](https://leetcode.com/problems/coin-change/) - Coin Change  
+4. [Leetcode 931](https://leetcode.com/problems/minimum-falling-path-sum/) - Minimum Falling Path Sum  
+5. [Leetcode 983](https://leetcode.com/problems/minimum-cost-for-tickets/) - Minimum Cost For Tickets  
+6. [Leetcode 650](https://leetcode.com/problems/2-keys-keyboard/) - 2 Keys Keyboard  
+7. [Leetcode 279](https://leetcode.com/problems/perfect-squares/) - Perfect Squares  
+8. [Leetcode 1049](https://leetcode.com/problems/last-stone-weight-ii/) - Last Stone Weight II  
+9. [Leetcode 120](https://leetcode.com/problems/triangle/) - Triangle  
+10. [Leetcode 474](https://leetcode.com/problems/ones-and-zeroes/) - Ones and Zeroes  
+11. [Leetcode 221](https://leetcode.com/problems/maximal-square/) - Maximal Square  
+12. [Leetcode 1240](https://leetcode.com/problems/tiling-a-rectangle-with-the-fewest-squares/) - Tiling a Rectangle with the Fewest Squares  
+13. [Leetcode 174](https://leetcode.com/problems/dungeon-game/) - Dungeon Game  
+14. [Leetcode 871](https://leetcode.com/problems/minimum-number-of-refueling-stops/) - Minimum Number of Refueling Stops  
+
+These problems use dynamic programming to calculate the minimum (or maximum) cost, path, or steps needed to achieve a target goal by iteratively building upon smaller subproblems.
