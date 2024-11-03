@@ -1,0 +1,100 @@
+Distinct Ways
+Problem List: https://leetcode.com/list/55ajm50i
+
+
+Generate problem statement for this pattern
+
+
+Statement
+Given a target find a number of distinct ways to reach the target.
+
+
+Approach
+Sum all possible ways to reach the current state.
+
+
+routes[i] = routes[i-1] + routes[i-2], ... , + routes[i-k]
+Generate sum for all values in the target and return the value for the target.
+
+
+Top-Down
+for (int j = 0; j < ways.size(); ++j) {
+    result += topDown(target - ways[j]);
+}
+return memo[/*state parameters*/] = result;
+Bottom-Up
+for (int i = 1; i <= target; ++i) {
+   for (int j = 0; j < ways.size(); ++j) {
+       if (ways[j] <= i) {
+           dp[i] += dp[i - ways[j]];
+       }
+   }
+}
+ 
+return dp[target]
+Similar Problems
+70. Climbing Stairs Easy
+
+
+Top-Down
+int result = climbStairs(n-1, memo) + climbStairs(n-2, memo); 
+    
+return memo[n] = result;
+Bottom-Up
+for (int stair = 2; stair <= n; ++stair) {
+   for (int step = 1; step <= 2; ++step) {
+       dp[stair] += dp[stair-step];   
+   }
+}
+62. Unique Paths Medium
+
+
+Top-Down
+int result = UniquePaths(x-1, y) + UniquePaths(x, y-1);
+
+return memo[x][y] = result;
+Bottom-Up
+for (int i = 1; i < m; ++i) {
+   for (int j = 1; j < n; ++j) {
+       dp[i][j] = dp[i][j-1] + dp[i-1][j];
+   }
+}
+1155. Number of Dice Rolls With Target Sum Medium
+
+
+for (int rep = 1; rep <= d; ++rep) {
+   vector<int> new_ways(target+1);
+   for (int already = 0; already <= target; ++already) {
+       for (int pipe = 1; pipe <= f; ++pipe) {
+           if (already - pipe >= 0) {
+               new_ways[already] += ways[already - pipe];
+               new_ways[already] %= mod;
+           }
+       }
+   }
+   ways = new_ways;
+}
+
+Complete Problem List for "Distinct Ways" Pattern
+
+Here is the full list of problems associated with the "Distinct Ways" pattern:
+
+1. [Leetcode 70](https://leetcode.com/problems/climbing-stairs/) - Climbing Stairs  
+2. [Leetcode 62](https://leetcode.com/problems/unique-paths/) - Unique Paths  
+3. [Leetcode 1155](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/) - Number of Dice Rolls With Target Sum  
+4. [Leetcode 688](https://leetcode.com/problems/knight-probability-in-chessboard/) - Knight Probability in Chessboard  
+5. [Leetcode 494](https://leetcode.com/problems/target-sum/) - Target Sum  
+6. [Leetcode 377](https://leetcode.com/problems/combination-sum-iv/) - Combination Sum IV  
+7. [Leetcode 935](https://leetcode.com/problems/knight-dialer/) - Knight Dialer  
+8. [Leetcode 1223](https://leetcode.com/problems/dice-roll-simulation/) - Dice Roll Simulation  
+9. [Leetcode 416](https://leetcode.com/problems/partition-equal-subset-sum/) - Partition Equal Subset Sum  
+10. [Leetcode 808](https://leetcode.com/problems/soup-servings/) - Soup Servings  
+11. [Leetcode 790](https://leetcode.com/problems/domino-and-tromino-tiling/) - Domino and Tromino Tiling  
+12. [Leetcode 801](https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/) - Minimum Swaps To Make Sequences Increasing  
+13. [Leetcode 673](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) - Number of Longest Increasing Subsequence  
+14. [Leetcode 63](https://leetcode.com/problems/unique-paths-ii/) - Unique Paths II  
+15. [Leetcode 576](https://leetcode.com/problems/out-of-boundary-paths/) - Out of Boundary Paths  
+16. [Leetcode 1269](https://leetcode.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps/) - Number of Ways to Stay in the Same Place After Some Steps  
+17. [Leetcode 1220](https://leetcode.com/problems/count-vowels-permutation/) - Count Vowels Permutation  
+
+These problems require calculating the number of distinct ways to reach a target, commonly using dynamic programming to efficiently compute paths or solutions for given constraints.
